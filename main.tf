@@ -1,3 +1,12 @@
+terraform {
+  backend "s3" {
+    bucket         = "tf-ecs-fz"
+    key            = "terraform.tfstate"
+    region         = "ap-south-1"
+
+    encrypt        = true
+  }
+}
 resource "aws_ecs_task_definition" "my_task_definition" {
   family                   = var.task_name
   execution_role_arn       = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
