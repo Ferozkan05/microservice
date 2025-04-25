@@ -36,6 +36,7 @@ logConfiguration = {
       awslogs-region        = "ap-south-1"
       awslogs-stream-prefix = "ecs"
     }  
+}
 }])
 
 }
@@ -62,5 +63,5 @@ resource "aws_ecs_service" "my_service" {
  aws_ecs_task_definition.my_task_definition
 ]
 
-  }
+  
 }
