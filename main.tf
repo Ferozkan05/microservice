@@ -1,67 +1,27 @@
 terraform {
   backend "s3" {
     bucket         = "tf-ecs-fz"
-    key            = var.bucket
+    key            = "admin/terraform.tfstate"
     region         = "ap-south-1"
 
     encrypt        = true
   }
 }
-resource "aws_ecs_task_definition" "my_task_definition" {
-  family                   = var.task_name
-  execution_role_arn       = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
-  task_role_arn            = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  cpu                      = "256"
-  memory                   = "512"
-
-  container_definitions = jsonencode([{
-    name      = var.task_name
-    image     = var.image
-    memory    = 512
-    cpu       = 256
-    essential = true
-    portMappings = [
-      {
-        containerPort = var.cport
-        hostPort      = var.hport
-        protocol      = "tcp"
-      }
-    ]
-logConfiguration = {
-    logDriver = "awslogs"
-    options = {
-      awslogs-group         = var.lg
-      awslogs-region        = "ap-south-1"
-      awslogs-stream-prefix = "ecs"
-    }  
-}
-}])
-
+provider "aws" {
+  region = "ap-south-1"
 }
 
-resource "aws_ecs_service" "my_service" {
-  name            = var.service_name
-  cluster         = var.cluster_name
-  task_definition = aws_ecs_task_definition.my_task_definition.arn
-  desired_count   = 1
-  launch_type     = "FARGATE"
-
-  network_configuration {
-    subnets          = var.subnets 
-    security_groups  = var.sg   
-    assign_public_ip = false
-  }
-  load_balancer {
-    #elb_name = var.elb
-    target_group_arn = var.tg
-    container_name   = var.task_name
-    container_port   = var.cport
-  }
-  depends_on = [
- aws_ecs_task_definition.my_task_definition
-]
-
-  
+module "ecs" {
+  source = "modules/ecs"
+  task_name = "admin"
+  service_name = "admin-svc"
+  cluster_name = "arn:aws:ecs:ap-south-1:376120733871:cluster/dev-ecs-cluster"
+image = "376120733871.dkr.ecr.ap-south-1.amazonaws.com/dev-admin-repo:latest"
+subnets = [  "subnet-0385badd767f03c1e",  "subnet-0e2e89e5b49e20703"]
+sg = [ "sg-0f0c7482f9f1e92e2" ]
+tg = "arn:aws:elasticloadbalancing:ap-south-1:376120733871:targetgroup/dev-ecs-tg-admission/b5b95b8c99a272f7"
+cport = 3001
+hport = 3001
+bucket = "admin/terraform.tfstate"
+lg = "ecs/admin"
 }
