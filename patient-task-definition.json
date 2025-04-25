@@ -1,0 +1,20 @@
+{
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "family": "patient",
+    "containerDefinitions": [
+        {
+            "name": "patient",
+            "image": "${{ secrets.ECR_PATIENT_URI }}:latest",
+            "essential": true,
+		
+        }
+    ],
+    "volumes": [],
+    "networkMode": "awsvpc",
+    "memory": "2 GB",
+    "cpu": "1 vCPU",
+    "taskRoleArn": "arn:aws:iam::376120733871:role/dev-ecs-execution-role",
+    "executionRoleArn": "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
+}
