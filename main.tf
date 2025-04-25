@@ -31,8 +31,8 @@ resource "aws_ecs_service" "my_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = var.subnets # Update with your actual subnet IDs
-    security_groups  = var.sg   # Update with your actual security group ID
+    subnets          = var.subnets 
+    security_groups  = var.sg   
     assign_public_ip = false
   }
   load_balancer {
@@ -41,4 +41,7 @@ resource "aws_ecs_service" "my_service" {
     container_name   = var.task_name
     container_port   = 3000
   }
+  depends_on = [
+ aws_ecs_task_definition.my_task_definition
+]
 }
