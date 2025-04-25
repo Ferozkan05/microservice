@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "tf-ecs-fz"
+    bucket         = var.bucket
     key            = "terraform.tfstate"
     region         = "ap-south-1"
 
@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "my_task_definition" {
 logConfiguration = {
     logDriver = "awslogs"
     options = {
-      awslogs-group         = "/ecs/app"
+      awslogs-group         = var.lg
       awslogs-region        = "ap-south-1"
       awslogs-stream-prefix = "ecs"
     }  
