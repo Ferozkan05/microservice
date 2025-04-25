@@ -1,0 +1,44 @@
+name: Checkout Multiple Repositories
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_name:
+        description: 'Name of the repo app to build'
+        required: true
+        default: 'ms-patient'
+
+jobs:
+  docker:
+    name: Build and Push Docker Image to ECR
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with: 
+        repository: ${{ github.event.inputs.app_name }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to AWS ECR
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build Docker image
+      #working-directory:  
+      run: |
+        
+        docker build -t ms-app .
+
+    - name: Tag Docker image & Push
+      run: |
+        if [[ "${{ github.event.inputs.app_name }}" == "ms-patient" ]]; then 
+          docker tag ms-app:latest ${{ secrets.ECR_REPOSITORY_URI }}:${{ github.sha }}
+          docker push ${{ secrets.ECR_REPOSITORY_URI }}:latest
+          docker push ${{ secrets.ECR_REPOSITORY_URI }}:${{ github.sha }}
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
