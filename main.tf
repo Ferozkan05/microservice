@@ -30,14 +30,7 @@ resource "aws_ecs_task_definition" "my_task_definition" {
       }
     ]
   }])
-logConfiguration = {
-    logDriver = "awslogs"
-    options = {
-      awslogs-group         = "/ecs/app"
-      awslogs-region        = "ap-south-1"
-      awslogs-stream-prefix = "ecs"
-    }
-  }
+
 }
 
 resource "aws_ecs_service" "my_service" {
@@ -61,4 +54,12 @@ resource "aws_ecs_service" "my_service" {
   depends_on = [
  aws_ecs_task_definition.my_task_definition
 ]
+logConfiguration = {
+    logDriver = "awslogs"
+    options = {
+      awslogs-group         = "/ecs/app"
+      awslogs-region        = "ap-south-1"
+      awslogs-stream-prefix = "ecs"
+    }
+  }
 }
