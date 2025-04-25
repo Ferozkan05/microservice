@@ -54,8 +54,8 @@ resource "aws_ecs_service" "my_service" {
   depends_on = [
  aws_ecs_task_definition.my_task_definition
 ]
-logConfiguration = {
-    logDriver = "awslogs"
+log_configuration = {
+    log_driver = "awslogs"
     options = {
       awslogs-group         = "/ecs/app"
       awslogs-region        = "ap-south-1"
