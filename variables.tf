@@ -14,7 +14,14 @@ variable "image" {
   description = "ECR Image name"
   type        = string
 }
-
+variable "cport" {
+  description = "Containerport"
+  type        = number
+}
+variable "hport" {
+  description = "host port"
+  type        = number
+}
 
 variable "subnets" {
   description = "Public subnet CIDRs"
