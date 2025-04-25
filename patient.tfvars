@@ -7,3 +7,5 @@ sg = [ "sg-0f0c7482f9f1e92e2" ]
 tg = "arn:aws:elasticloadbalancing:ap-south-1:376120733871:targetgroup/dev-ecs-tg/c178c186098d6b0b"
 cport = 3000
 hport = 3000
+bucket = "patient/terraform.tfstate"
+lg = "ecs/patients"
