@@ -3,10 +3,10 @@ name: Terraform Apply to Register ECS Task & Service on Merge to Main
 on:
   workflow_dispatch:
     inputs:
-      tfvars:
-        description: 'Terraform .tfvars file (e.g. patient.tfvars)'
+      tf_directory:
+        description: 'Terraform dir  (e.g. patient)'
         required: true
-        default: 'patient.tfvars'
+        default: 'admin'
 
 jobs:
   terraform:
@@ -24,14 +24,15 @@ jobs:
 
     - name: Terraform Init
       run: terraform init 
-      #working-directory: ${{ github.event.inputs.tf_directory }}
+      working-directory: ${{ github.event.inputs.tf_directory }}
     
     - name: Terraform Plan
-      run: terraform plan -var-file=${{ github.event.inputs.tfvars }}
+      run: terraform plan 
+      working-directory: ${{ github.event.inputs.tf_directory }}
   
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var-file=${{ github.event.inputs.tfvars }}
-      #working-directory: ${{ github.event.inputs.tf_directory }}
+      run: terraform apply -auto-approve 
+      working-directory: ${{ github.event.inputs.tf_directory }}
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
