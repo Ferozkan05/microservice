@@ -2,7 +2,11 @@ name: Terraform Format and Validate
 
 on:
   workflow_dispatch:
-
+    inputs:
+      tfvars:
+        description: 'Terraform .tfvars file (e.g. patient.tfvars)'
+        required: true
+        default: 'patient.tfvars'
 
 jobs:
   terraform:
@@ -25,11 +29,11 @@ jobs:
  #     run: terraform validate
 
     - name: Terraform Init
-      run: terraform init
+      run: terraform init 
       #working-directory: ${{ github.event.inputs.tf_directory }}
     
     - name: Terraform Plan
-      run: terraform plan
+      run: terraform plan -var-file=${{ github.event.inputs.tfvars }}
       #working-directory: ${{ github.event.inputs.tf_directory }}    
 
     env:
