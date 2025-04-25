@@ -6,7 +6,7 @@ on:
       app_name:
         description: 'Name of the repo app to build'
         required: true
-        default: 'ms-patient'
+        default: 'Ferozkan05/ms-patient'
 
 jobs:
   docker:
@@ -26,10 +26,7 @@ jobs:
       
     - name: Log in to AWS ECR
       uses: aws-actions/amazon-ecr-login@v1
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
+
     
     - name: Build Docker image
       #working-directory:  
@@ -41,12 +38,9 @@ jobs:
       run: |
         if [[ "${{ github.event.inputs.app_name }}" == "ms-patient" ]]; then 
           docker tag ms-app:latest ${{ secrets.ECR_REPOSITORY_URI }}:${{ github.sha }}
-          docker push ${{ secrets.ECR_REPOSITORY_URI }}:latest
-          docker push ${{ secrets.ECR_REPOSITORY_URI }}:${{ github.sha }}
-        env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
+          docker push ${{ secrets.ECR_PATIENT_URI }}:latest
+          docker push ${{ secrets.ECR_PATIENT_URI }}:${{ github.sha }}
+
 
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
