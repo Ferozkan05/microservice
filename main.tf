@@ -26,7 +26,7 @@ resource "aws_ecs_task_definition" "my_task_definition" {
 resource "aws_ecs_service" "my_service" {
   name            = var.service_name
   cluster         = var.cluster_name
-  task_definition = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
+  task_definition = aws_ecs_task_definition.my_task_definition.arn
   desired_count   = 1
   launch_type     = "FARGATE"
 
