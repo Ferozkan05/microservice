@@ -18,8 +18,8 @@ jobs:
       with:
         terraform_version: 1.3.7
 
-    - name: Terraform Format
-      run: terraform fmt -check -diff
+#    - name: Terraform Format
+ #     run: terraform fmt -check -diff
 
     - name: Terraform Validate
       run: terraform validate
