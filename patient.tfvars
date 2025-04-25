@@ -1,6 +1,6 @@
 task_name = "patient"
 service_name = "patient-svc"
-cluster_name = "dev-ecs-cluter"
+cluster_name = "arn:aws:ecs:ap-south-1:376120733871:cluster/dev-ecs-cluster"
 image = "376120733871.dkr.ecr.ap-south-1.amazonaws.com/dev-hospital-repo:latest"
 subnets = [  "subnet-072d3230e8619b10c",  "subnet-0a569c5e7fa311f0c"]
 sg = [ "sg-0f0c7482f9f1e92e2" ]
