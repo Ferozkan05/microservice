@@ -36,7 +36,7 @@ resource "aws_ecs_service" "my_service" {
     assign_public_ip = false
   }
   load_balancer {
-    elb_name = var.elb
+    #elb_name = var.elb
     target_group_arn = var.tg
     container_name   = var.task_name
     container_port   = 3000
