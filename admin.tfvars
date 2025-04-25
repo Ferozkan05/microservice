@@ -7,5 +7,4 @@ sg = [ "sg-0f0c7482f9f1e92e2" ]
 tg = "arn:aws:elasticloadbalancing:ap-south-1:376120733871:targetgroup/dev-ecs-tg-admission/b5b95b8c99a272f7"
 cport = 3001
 hport = 3001
-bucket = "admin/terraform.tfstate"
 lg = "ecs/admin"
