@@ -1,0 +1,41 @@
+name: ECS Deploy Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Adjust to your AWS region
+
+      - name: Register ECS Task Definition
+        run: |
+          aws ecs register-task-definition \
+            --cli-input-json file://task-definition.json
+
+      - name: Update ECS Service to use new Task Definition
+        run: |
+          SERVICE_NAME="patient-svc"
+          CLUSTER_NAME="dev-ecs-cluster"
+          
+          # Get the latest revision of the task definition
+          TASK_DEFINITION_REVISION=$(aws ecs describe-task-definition --task-definition my-ecs-task --query 'taskDefinition.revision' --output text)
+          
+          # Update ECS service to use the new task definition revision
+          aws ecs update-service \
+            --cluster $CLUSTER_NAME \
+            --service $SERVICE_NAME \
+            --task-definition my-ecs-task:$TASK_DEFINITION_REVISION
