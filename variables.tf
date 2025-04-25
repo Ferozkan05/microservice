@@ -29,7 +29,4 @@ variable "tg" {
   description = "TG name"
   type        = string
 }
-variable "elb" {
-  description = "ELB name"
-  type        = string
-}
+
