@@ -40,7 +40,3 @@ variable "lg" {
   description = "LG name"
   type        = string
 }
-variable "bucket" {
-  description = "bucket key name"
-  type        = string
-}
