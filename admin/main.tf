@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 module "ecs" {
-  source = "../modules/ecs-fz"
+  source = "../modules/ecs"
 task_name = "admin"
 service_name = "admi-svc"
 cluster_name = "arn:aws:ecs:ap-south-1:376120733871:cluster/dev-ecs-cluster"
