@@ -36,4 +36,11 @@ variable "tg" {
   description = "TG name"
   type        = string
 }
-
+variable "lg" {
+  description = "LG name"
+  type        = string
+}
+variable "bucket" {
+  description = "bucket key name"
+  type        = string
+}
