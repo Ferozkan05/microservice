@@ -39,7 +39,7 @@ resource "aws_ecs_service" "my_service" {
     #elb_name = var.elb
     target_group_arn = var.tg
     container_name   = var.task_name
-    container_port   = 3000
+    container_port   = var.cport
   }
   depends_on = [
  aws_ecs_task_definition.my_task_definition
