@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "my_task_definition" {
-  family                   = "my-task-family"
+  family                   = var.task_name
   execution_role_arn       = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
   task_role_arn            = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
   network_mode             = "awsvpc"
@@ -8,15 +8,15 @@ resource "aws_ecs_task_definition" "my_task_definition" {
   memory                   = "512"
 
   container_definitions = jsonencode([{
-    name      = "my-container"
-    image     = "${aws_ecr_repository.my_repository.repository_url}:latest"
+    name      = var.task_name
+    image     = var.image
     memory    = 512
     cpu       = 256
     essential = true
     portMappings = [
       {
-        containerPort = 80
-        hostPort      = 80
+        containerPort = 3000
+        hostPort      = 3000
         protocol      = "tcp"
       }
     ]
@@ -24,15 +24,21 @@ resource "aws_ecs_task_definition" "my_task_definition" {
 }
 
 resource "aws_ecs_service" "my_service" {
-  name            = "my-ecs-service"
-  cluster         = aws_ecs_cluster.my_cluster.id
-  task_definition = aws_ecs_task_definition.my_task_definition.arn
+  name            = var.service_name
+  cluster         = var.cluster_name
+  task_definition = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
   desired_count   = 1
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = ["subnet-xxxxxxxx", "subnet-yyyyyyyy"] # Update with your actual subnet IDs
-    security_groups  = ["sg-xxxxxxxx"]  # Update with your actual security group ID
-    assign_public_ip = true
+    subnets          = var.subnets # Update with your actual subnet IDs
+    security_groups  = var.sg   # Update with your actual security group ID
+    assign_public_ip = false
+  }
+  load_balancer {
+    elb_name = var.elb
+    target_group_arn = var.tg
+    container_name   = var.task_name
+    container_port   = 3000
   }
 }
