@@ -41,7 +41,7 @@ jobs:
           docker tag ms-app:latest ${{ secrets.ECR_PATIENT_URI  }}:latest
           docker push ${{ secrets.ECR_PATIENT_URI }}:latest
           docker push ${{ secrets.ECR_PATIENT_URI }}:${{ github.sha }}
-        elif [[ "${{ github.event.inputs.app_name }}" == "Ferozkan05/ms-admin" ]]; then 
+        elif [[ "${{ github.event.inputs.app_name }}" == "Ferozkan05/ms-appointment" ]]; then 
           docker tag ms-app:latest ${{ secrets.ECR_PATIENT_URI  }}:${{ github.sha }}
           docker tag ms-app:latest ${{ secrets.ECR_PATIENT_URI  }}:latest
           docker push ${{ secrets.ECR_PATIENT_URI }}:latest
