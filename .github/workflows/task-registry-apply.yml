@@ -47,7 +47,7 @@ jobs:
 
     - name: Terraform Destory
       if: ${{ github.event.inputs.create == 'false' }}
-      run: terraform destroy -var-file=${{ github.event.inputs.tfvars }}
+      run: terraform destroy -auto-approve -var-file=${{ github.event.inputs.tfvars }}
       working-directory: ${{ github.event.inputs.tf_directory }}       
      
     env:
