@@ -1,0 +1,33 @@
+{
+    "family": "patient",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "patient",
+            "image": "376120733871.dkr.ecr.ap-south-1.amazonaws.com/dev-hospital-repo:latest",
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "ecs/patient",
+                    "awslogs-region": "ap-south-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "taskRoleArn": "arn:aws:iam::376120733871:role/dev-ecs-execution-role",
+    "executionRoleArn": "arn:aws:iam::376120733871:role/dev-ecs-execution-role",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}
