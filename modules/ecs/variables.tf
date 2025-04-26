@@ -38,7 +38,7 @@ variable "subnets" {
 
 variable "sg" {
   description = "SG name"
-  type        = list(string)
+  type        = string
 }
 variable "tg" {
   description = "TG name"
