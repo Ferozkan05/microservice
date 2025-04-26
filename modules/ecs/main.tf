@@ -39,7 +39,7 @@ resource "aws_security_group" "ecs_sg" {
     from_port   = var.cport
     to_port     = var.cport
     protocol    = "tcp"
-    security_groups  = [var.sg]
+    security_groups  = var.sg
   }
 
   egress {
