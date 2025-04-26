@@ -18,11 +18,15 @@ variable "cport" {
   description = "Containerport"
   type        = number
 }
+variable "iam" {
+  description = "ECS iam role"
+  type        = string
+}
+
 variable "hport" {
   description = "host port"
   type        = number
 }
-
 variable "subnets" {
   description = "Public subnet CIDRs"
   type        = list(string)
