@@ -44,6 +44,7 @@ jobs:
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
+          desired-count: 2
           cluster: dev-ecs-cluster
           service: ${{ github.event.inputs.svc_name }}
           task-definition: ${{ steps.render-task-def.outputs.task-definition }}
