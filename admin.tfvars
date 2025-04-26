@@ -8,3 +8,5 @@ tg = "arn:aws:elasticloadbalancing:ap-south-1:376120733871:targetgroup/dev-ecs-t
 cport = 3001
 hport = 3001
 lg = "ecs/admin"
+vpc_id = ""
+iam= ""
