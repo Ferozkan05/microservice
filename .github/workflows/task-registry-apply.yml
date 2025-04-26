@@ -32,7 +32,6 @@ jobs:
         terraform_version: 1.3.7
 
     - name: Terraform Init
-      if: ${{ github.event.inputs.create == 'true' }}
       run: terraform init 
       working-directory: ${{ github.event.inputs.tf_directory }}
     
