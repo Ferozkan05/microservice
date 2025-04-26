@@ -27,6 +27,10 @@ variable "hport" {
   description = "host port"
   type        = number
 }
+variable "vpc_id" {
+  description = "VPC for ecs"
+  type        = number
+}
 variable "subnets" {
   description = "Public subnet CIDRs"
   type        = list(string)
