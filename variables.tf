@@ -18,11 +18,19 @@ variable "cport" {
   description = "Containerport"
   type        = number
 }
+variable "iam" {
+  description = "ECS iam role"
+  type        = string
+}
+
 variable "hport" {
   description = "host port"
   type        = number
 }
-
+variable "vpc_id" {
+  description = "VPC for ecs"
+  type        = string
+}
 variable "subnets" {
   description = "Public subnet CIDRs"
   type        = list(string)
@@ -30,7 +38,7 @@ variable "subnets" {
 
 variable "sg" {
   description = "SG name"
-  type        = list(string)
+  type        = string
 }
 variable "tg" {
   description = "TG name"
@@ -38,9 +46,5 @@ variable "tg" {
 }
 variable "lg" {
   description = "LG name"
-  type        = string
-}
-variable "bucket" {
-  description = "bucket key name"
   type        = string
 }
