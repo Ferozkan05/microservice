@@ -6,11 +6,15 @@ on:
       dp_dir:
         description: 'deployment json directory (e.g. deployment/admin.json, deployment/patient.json)'
         required: true
-        default: 'deployment/admin.json'
+        default: 'deployments/admin.json'
       cont_name:
         description: 'container name (e.g. admin, patient)'
         required: true
         default: 'admin'  
+      img_name:
+        description: 'Image name (e.g. admin:latest, patient)'
+        required: true
+        default: '376120733871.dkr.ecr.ap-south-1.amazonaws.com/dev-admin-repo:latest'         
       svc_name:
         description: 'svc name (e.g. admi-svc, patient-svc)'
         required: true
@@ -35,7 +39,7 @@ jobs:
         with:
           task-definition: ${{ github.event.inputs.dp_dir }}
           container-name: ${{ github.event.inputs.cont_name }}
-          image: 376120733871.dkr.ecr.ap-south-1.amazonaws.com/dev-admin-repo:latest
+          image: ${{ github.event.inputs.img_name }} 
 
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
