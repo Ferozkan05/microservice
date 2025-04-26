@@ -29,7 +29,7 @@ variable "hport" {
 }
 variable "vpc_id" {
   description = "VPC for ecs"
-  type        = number
+  type        = string
 }
 variable "subnets" {
   description = "Public subnet CIDRs"
