@@ -1,7 +1,7 @@
 resource "aws_ecs_task_definition" "my_task_definition" {
   family                   = var.task_name
-  execution_role_arn       = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
-  task_role_arn            = "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
+  execution_role_arn       = var.iam
+  task_role_arn            = var.iam
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -31,7 +31,24 @@ logConfiguration = {
 }])
 
 }
+resource "aws_security_group" "ecs_sg" {
+  name   = "${var.service_name}-ecs-sg"
+  vpc_id = var.vpc_id
 
+  ingress {
+    from_port   = var.cport
+    to_port     = var.cport
+    protocol    = "tcp"
+    security_groups  = [var.sg]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 resource "aws_ecs_service" "my_service" {
   name            = var.service_name
   cluster         = var.cluster_name
