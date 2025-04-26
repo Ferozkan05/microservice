@@ -17,10 +17,12 @@ task_name = "admin"
 service_name = "admi-svc"
 cluster_name = "arn:aws:ecs:ap-south-1:376120733871:cluster/dev-ecs-cluster"
 image = "376120733871.dkr.ecr.ap-south-1.amazonaws.com/dev-admin-repo:latest"
-subnets = [  "subnet-0385badd767f03c1e",  "subnet-0e2e89e5b49e20703"]
-sg = [ "sg-0f0c7482f9f1e92e2" ]
-tg = "arn:aws:elasticloadbalancing:ap-south-1:376120733871:targetgroup/dev-ecs-tg-admission/b5b95b8c99a272f7"
+subnets = [  "subnet-0c4f91f98ff6e9eb0",  "subnet-0cc6471b0e8f05b0d"]
+sg = [ "sg-08363b79d9650acf9" ]
+tg = "arn:aws:elasticloadbalancing:ap-south-1:376120733871:targetgroup/dev-ecs-tg-admission/8cf94b1b968098ac"
 cport = 3001
 hport = 3001
 lg = "ecs/admin"
+vpc_id = "vpc-09de064073c92890e"
+iam= "arn:aws:iam::376120733871:role/dev-ecs-execution-role"
 }
